@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import AppRoutes from "../Routes/Routes";
-import Home from "../Home/Home";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer/Footer";
@@ -25,7 +24,6 @@ const App = () => {
       <div className="container">
         <Sidebar />
         <AppRoutes />
-        <Home />
       </div>
 
       <Footer />

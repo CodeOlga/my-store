@@ -9,4 +9,7 @@ export const buildUrl = (url, params) => {
     urlWithParams += `${sign}${key}=${value}`
   })
   return urlWithParams;
-}
+};
+
+// функція для вирахування TOTAL PRICE
+export const sumBy = (arr) => arr.reduce((prev, cur) => prev + cur, 0);

@@ -24,7 +24,7 @@ const Category = () => {
   };
 
   const [isEnd, setEnd] = useState('');
-  const [cat, setCat] = useState('');
+  const [cat, setCat] = useState(null);
   const [items, setItems] = useState([]);
   const [values, setValues] = useState(defaultValues);
   const [params, setParams] = useState(defaultParams);
@@ -34,6 +34,9 @@ const Category = () => {
   useEffect(() => {
     if (!id) return;
 
+    setValues(defaultValues);
+    setItems([]);
+    setEnd(false);
     setParams({ ...defaultParams, categoryId: id })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -43,10 +46,6 @@ const Category = () => {
 
     if (!data.length) return setEnd(true);
 
-    // const products = Object.values(data);
-
-    // if (!products.length) return;
-
     setItems((_items) => [..._items, ...data]);
   }, [data, isLoading]);
 
@@ -54,8 +53,8 @@ const Category = () => {
     if (!id || !list.length) return;
 
     // id приходить у вигляді string, а потрібен number, тому id * 1
-    const { name } = list.find((item) => item.id === id * 1)
-    setCat(name)
+    const category = list.find((item) => item.id === id * 1)
+    setCat(category)
 
   }, [list, id]);
 
@@ -68,12 +67,18 @@ const Category = () => {
 
     setItems([]);
     setEnd(false);
-    setParams({ ...params, ...values })
+    setParams({ ...defaultParams, ...values })
+  }
+
+  const handleReset = () => {
+    setValues(defaultValues);
+    setParams(defaultParams);
+    setEnd(false);
   }
 
   return (
     <section className={styles.wrapper}>
-      <h2 className={styles.title}>{cat}</h2>
+      <h2 className={styles.title}>{cat?.name}</h2>
       <form className={styles.filters} onSubmit={handleSubmit}>
         <div className={styles.filter}>
           <input
@@ -93,6 +98,7 @@ const Category = () => {
             placeholder="0"
             value={values.price_min}
           />
+          <span>Price from</span>
         </div>
 
         <div className={styles.filter}>
@@ -103,6 +109,7 @@ const Category = () => {
             placeholder="0"
             value={values.price_max}
           />
+          <span>Price to</span>
         </div>
 
         <button type="submit" hidden />
@@ -113,7 +120,7 @@ const Category = () => {
       ) : !isSuccess || !items.length ? (
         <div className={styles.back}>
           <span>No results</span>
-          <button>Reset</button>
+          <button onClick={handleReset}>Reset</button>
         </div>
       ) : (
         <Products

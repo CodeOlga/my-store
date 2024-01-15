@@ -35,6 +35,13 @@ const Header = () => {
     setSearchValue(value)
   };
 
+  // const handleItemClick = (productId) => {
+  //   // Переход на страницу товара по его ID
+  //   navigate(`${ROUTES.PRODUCT}/${productId}`);
+  //   // Очистка поискового запроса после выбора товара
+  //   setSearchValue('');
+  // };
+
   return (
     <div className={styles.header}>
       <div className={styles.logo}>
@@ -82,6 +89,7 @@ const Header = () => {
                   return (
                     <Link
                       key={id}
+                      // onClick={() => handleItemClick(id)}
                       onClick={() => setSearchValue('')}
                       className={styles.item}
                       to={`/product/${id}`}
